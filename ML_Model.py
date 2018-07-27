@@ -4,9 +4,9 @@
 """
 
 import pandas as varpanda
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
+import numpy as varnumpy
+import seaborn as varseaborn
+import matplotlib.pyplot as varmatplt
 
 # read Dataset from csv file
 melbourne_file_path = 'Raw_Data/melHousingData.csv'
@@ -30,22 +30,22 @@ print(varpanda.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2
 print('\n')
 
 
-f, ax = plt.subplots(figsize=(5, 5))
-sns.regplot(data=df2, x='Rooms', y='Price')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(5, 5))
+varseaborn.regplot(data=df2, x='Rooms', y='Price')
+varmatplt.show()
 
 # Although weak, it appears that there seems to be a positive relationship. Let's see what is the actual correlation between price and the other data points. We will look at this in 2 ways heatman for visualization and the correlation coefficient score.
 
-f, ax = plt.subplots(figsize=(5, 5))
+f, ax = varmatplt.subplots(figsize=(5, 5))
 corrmat = df2.corr()
-sns.heatmap(corrmat, vmax=.8, square=True)
-plt.show()
+varseaborn.heatmap(corrmat, vmax=.8, square=True)
+varmatplt.show()
 corrmat
 
 # Distribution of the data
-plt.rcParams['figure.figsize'] = 16, 16
+varmatplt.rcParams['figure.figsize'] = 16, 16
 df2.loc[:,:].hist(bins=100)
-plt.show()
+varmatplt.show()
 
 # Create new features: Let's create new features to see if these new features will have a stronger correlation coefficient score than the original. We will do so by mixing the data and altering the data.
 df2['Roomssq'] = df2.Rooms ** 2
@@ -56,10 +56,10 @@ df2['year'] = (2017 - df2.YearBuilt)
 df2['yearsq'] = (2017 - df2.YearBuilt) ** 2
 df2['yearsqrt'] = (2017 - df2.YearBuilt) ** (1/2)
 
-f, ax = plt.subplots(figsize=(5, 5))
+f, ax = varmatplt.subplots(figsize=(5, 5))
 corrmat = df2.corr()
-sns.heatmap(corrmat, vmax=.8, square=True)
-plt.show()
+varseaborn.heatmap(corrmat, vmax=.8, square=True)
+varmatplt.show()
 corrmat
 
 # It appears that the column "Plus" has a correlation score of .529 which is the highest correlation score out of all the features new and old. This new feature was created by rooms, bedrooms and bathrooms.
@@ -82,26 +82,26 @@ print(cross_val_score(dtr, X, Y, cv=5))
 predicted = dtr.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -122,26 +122,26 @@ knn.fit(X, Y)
 predicted = knn.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='blue')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='blue')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -158,15 +158,15 @@ for n in range(2, 16):
     knn = neighbors.KNeighborsRegressor(n_neighbors=n)
     knn.fit(X, Y)
     predicted = knn.predict(X)
-    rmse_l.append(np.sqrt(mean_squared_error(Y, predicted)))
+    rmse_l.append(varnumpy.sqrt(mean_squared_error(Y, predicted)))
     num.append(n)
 	
 df_plt = varpanda.DataFrame()
 df_plt['rmse'] = rmse_l
 df_plt['n_neighbors'] = num
-ax = plt.figure(figsize=(15,7))
-sns.barplot(data = df_plt, x = 'n_neighbors', y = 'rmse')
-plt.show()
+ax = varmatplt.figure(figsize=(15,7))
+varseaborn.barplot(data = df_plt, x = 'n_neighbors', y = 'rmse')
+varmatplt.show()
 
 print(rmse_l)
 
@@ -183,26 +183,26 @@ lass.fit (X, Y)
 predicted = lass.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -213,7 +213,7 @@ for n in range (0,3):
     lass = linear_model.Lasso(alpha = alp)
     lass.fit (X, Y)
     predicted = lass.predict(X)
-    rmse = np.sqrt(mean_squared_error(Y, predicted))
+    rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
     alp = alp + .1
     print('RMSE:')
     print(rmse)
@@ -230,26 +230,26 @@ rid.fit (X, Y)
 predicted = rid.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='orange')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='orange')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -260,7 +260,7 @@ lass.fit (X, Y)
 
 print('\nR² for the model with many features:')
 print(lass.score(X, Y))
-origparams = np.append(lass.coef_, lass.intercept_)
+origparams = varnumpy.append(lass.coef_, lass.intercept_)
 print('\nParameter features:')
 print(origparams)
 
@@ -277,7 +277,7 @@ print(cross_val_score(lass, X, Y, cv=3))
 
 print('\nR² for the model with many features:')
 print(rid.score(X, Y))
-origparams_rid = np.append(rid.coef_, rid.intercept_)
+origparams_rid = varnumpy.append(rid.coef_, rid.intercept_)
 print('\nParameter features:')
 print(origparams_rid)
 
@@ -325,9 +325,9 @@ temp2.columns = ['Suburb', 'max_sub_id', 'min_sub_id', 'mean_sub_id']
 print(temp2.info())
 temp2.head()
 
-f, ax = plt.subplots(figsize=(15, 60))
-sns.boxplot(data = df3, x='Price', y='Suburb')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 60))
+varseaborn.boxplot(data = df3, x='Price', y='Suburb')
+varmatplt.show()
 
 df_copy = df3
 df_copy = varpanda.merge(df_copy, temp2, on='Suburb', how='left')
@@ -339,9 +339,9 @@ temp3 = temp3.reset_index()
 temp3.columns = ['Type', 'max_t_id', 'min_t_id', 'mean_t_id']
 temp3
 
-f, ax = plt.subplots(figsize=(15, 10))
-sns.stripplot(data = df3, x='Type', y='Price', jitter=.5)
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 10))
+varseaborn.stripplot(data = df3, x='Type', y='Price', jitter=.5)
+varmatplt.show()
  
 df_copy = varpanda.merge(df_copy, temp3, on='Type', how='left')
 df_copy.head()
@@ -353,9 +353,9 @@ temp4.columns = ['Method', 'max_m_id', 'min_m_id', 'mean_m_id']
 temp4
 
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.violinplot(data = df3, x='Price', y='Method', jitter=.5)
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.violinplot(data = df3, x='Price', y='Method', jitter=.5)
+varmatplt.show()
 
 df_copy = varpanda.merge(df_copy, temp4, on='Method', how='left')
 df_copy.head()
@@ -367,9 +367,9 @@ temp5.columns = ['SellerG', 'max_s_id', 'min_s_id', 'mean_s_id']
 print(temp5.info())
 temp5.head()
 
-f, ax = plt.subplots(figsize=(15, 60))
-sns.stripplot(data = df3, x='Price', y='SellerG', jitter=.1)
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 60))
+varseaborn.stripplot(data = df3, x='Price', y='SellerG', jitter=.1)
+varmatplt.show()
 
 df_copy = varpanda.merge(df_copy, temp5, on='SellerG', how='left')
 df_copy.head()
@@ -381,10 +381,10 @@ temp6.columns = ['CouncilArea', 'max_c_id', 'min_c_id', 'mean_c_id']
 print(temp6.info())
 temp6.head()
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.boxplot(data = df3, x='CouncilArea', y='Price')
-plt.xticks(rotation='vertical')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.boxplot(data = df3, x='CouncilArea', y='Price')
+varmatplt.xticks(rotation='vertical')
+varmatplt.show()
 
 #df_copy = df_copy.drop(['max_c_id_y', 'min_c_id_y', 'mean_c_id_y'], axis=1)
 
@@ -398,10 +398,10 @@ temp7.columns = ['Regionname', 'max_r_id', 'min_r_id', 'mean_r_id']
 print(temp7.info())
 temp7.head()
 
-f, ax = plt.subplots(figsize=(15, 10))
-sns.boxplot(data = df3, x='Price', y='Regionname')
-#plt.xticks(rotation='vertical')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 10))
+varseaborn.boxplot(data = df3, x='Price', y='Regionname')
+#varmatplt.xticks(rotation='vertical')
+varmatplt.show()
 
 df_copy = varpanda.merge(df_copy, temp7, on='Regionname', how='left')
 df_copy.head()
@@ -412,19 +412,19 @@ df_copy.head()
 # Does the "when you sell your home" matter?
 df_copy['date_m'] = df_copy['date_m'].astype(int)
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.stripplot(data = df_copy, x='date_m', y='Price', jitter=.25)
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.stripplot(data = df_copy, x='date_m', y='Price', jitter=.25)
+varmatplt.show()
 
 df_copy['date_d'] = df_copy['date_d'].astype(int)
-f, ax = plt.subplots(figsize=(15, 10))
-sns.boxplot(data = df_copy, x='date_d', y='Price')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 10))
+varseaborn.boxplot(data = df_copy, x='date_d', y='Price')
+varmatplt.show()
 
 df_copy['date_y'] = df_copy['date_y'].astype(int)
-f, ax = plt.subplots(figsize=(7, 10))
-sns.violinplot(data = df_copy, x='date_y', y='Price')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(7, 10))
+varseaborn.violinplot(data = df_copy, x='date_y', y='Price')
+varmatplt.show()
 
 # Lets see how many features we now have:
 df_copy.info()
@@ -433,10 +433,10 @@ df_copy = df_copy.drop(['Suburb', 'Address', 'Type', 'Method', 'SellerG', 'Date'
 df_copy.info()
 
 # Let's see how our new features correlate to the price:
-f, ax = plt.subplots(figsize=(10, 10))
+f, ax = varmatplt.subplots(figsize=(10, 10))
 corrmat = df_copy.corr()
-sns.heatmap(corrmat, vmax=.8, square=True)
-plt.show()
+varseaborn.heatmap(corrmat, vmax=.8, square=True)
+varmatplt.show()
 corrmat
 
 # WOW!!! If you look at max sub id, this has a .575 score to price. This is really good, lets see how our new features fare against the same models we used. Let's revisit Decision Tree Regressor.
@@ -457,9 +457,9 @@ plt_dtr = varpanda.DataFrame()
 plt_dtr['mean_scores'] = scores
 plt_dtr['depth'] = depth
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.barplot(data = plt_dtr, x='depth', y='mean_scores')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.barplot(data = plt_dtr, x='depth', y='mean_scores')
+varmatplt.show()
 
 # The above bar graph represent number of max depth on the x-axis that the model will limit itself to and on the y-axis is the mean scores of the cross validation of 12 folds. As you can see even the worst mean score of approximately 4, this model guesses way better due to having more information.
 
@@ -476,26 +476,26 @@ knn.fit(X, Y)
 predicted = knn.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='purple')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='purple')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='purple')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='purple')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -509,26 +509,26 @@ lass.fit (X, Y)
 predicted = lass.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='pink')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='pink')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='pink')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='pink')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -537,7 +537,7 @@ lass.fit (X, Y)
 
 print('\nR²:')
 print(lass.score(X, Y))
-origparams = np.append(lass.coef_, lass.intercept_)
+origparams = varnumpy.append(lass.coef_, lass.intercept_)
 print('\nParameter features:')
 print(origparams)
 
@@ -550,26 +550,26 @@ rid.fit (X, Y)
 predicted = rid.predict(X)
 residual = Y - predicted
 
-fig = plt.figure(figsize=(30,30))
-ax1 = plt.subplot(211)
-sns.distplot(residual, color ='teal')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.title('Residual counts',fontsize=35)
-plt.xlabel('Residual',fontsize=25)
-plt.ylabel('Count',fontsize=25)
+fig = varmatplt.figure(figsize=(30,30))
+ax1 = varmatplt.subplot(211)
+varseaborn.distplot(residual, color ='teal')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.title('Residual counts',fontsize=35)
+varmatplt.xlabel('Residual',fontsize=25)
+varmatplt.ylabel('Count',fontsize=25)
 
-ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='teal')
-plt.tick_params(axis='both', which='major', labelsize=20)
-plt.xlabel('Predicted',fontsize=25)
-plt.ylabel('Residual',fontsize=25)
-plt.axhline(y=0)
-plt.title('Residual vs. Predicted',fontsize=35)
+ax2 = varmatplt.subplot(212)
+varmatplt.scatter(predicted, residual, color ='teal')
+varmatplt.tick_params(axis='both', which='major', labelsize=20)
+varmatplt.xlabel('Predicted',fontsize=25)
+varmatplt.ylabel('Residual',fontsize=25)
+varmatplt.axhline(y=0)
+varmatplt.title('Residual vs. Predicted',fontsize=35)
 
-plt.show()
+varmatplt.show()
 
 from sklearn.metrics import mean_squared_error
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 print('RMSE:')
 print(rmse)
 
@@ -578,7 +578,7 @@ rid.fit (X, Y)
 
 print('\nR²:')
 print(rid.score(X, Y))
-origparams_rid = np.append(rid.coef_, rid.intercept_)
+origparams_rid = varnumpy.append(rid.coef_, rid.intercept_)
 print('\nParameter features:')
 print(origparams_rid)
 
@@ -616,18 +616,18 @@ plt_gbr['mean_scores'] = mean_scores
 plt_gbr['depth'] = deep
 plt_gbr['R²'] = r_sq
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.barplot(data = plt_gbr, x='depth', y='R²')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.barplot(data = plt_gbr, x='depth', y='R²')
+varmatplt.show()
 
-f, ax = plt.subplots(figsize=(15, 5))
-sns.barplot(data = plt_gbr, x='depth', y='mean_scores')
-plt.show()
+f, ax = varmatplt.subplots(figsize=(15, 5))
+varseaborn.barplot(data = plt_gbr, x='depth', y='mean_scores')
+varmatplt.show()
 
 gbr = GradientBoostingRegressor(loss ='ls', max_depth=6)
 gbr.fit (X, Y)
 predicted = gbr.predict(X)
-rmse = np.sqrt(mean_squared_error(Y, predicted))
+rmse = varnumpy.sqrt(mean_squared_error(Y, predicted))
 scores = cross_val_score(gbr, X, Y, cv=12)
 
 print('\nCross Validation Scores:')
