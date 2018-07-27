@@ -3,14 +3,14 @@
 @author: ady.kalra
 """
 
-import pandas as pd
+import pandas as varpanda
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 # read Dataset from csv file
 melbourne_file_path = 'Raw_Data/melHousingData.csv'
-melbourne_data = pd.read_csv(melbourne_file_path)
+melbourne_data = varpanda.read_csv(melbourne_file_path)
 melbourne_data.head()
 
 
@@ -26,7 +26,7 @@ df2 = df2[df2.Longtitude.notnull()]
 df2.info()
 
 # if number of bedrooms has a relationship to price
-print(pd.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2']))
+print(varpanda.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2']))
 print('\n')
 
 
@@ -66,7 +66,7 @@ corrmat
 # Let's drop the weakest scores and run our first model "Decision Tree Regressor"
 X = df2.drop(['YearBuilt', 'year', 'yearsq', 'yearsqrt', 'Price',], axis=1)
 Y = df2.Price
-X = pd.get_dummies(data=X)
+X = varpanda.get_dummies(data=X)
 
 
 from sklearn.tree import DecisionTreeRegressor
@@ -161,7 +161,7 @@ for n in range(2, 16):
     rmse_l.append(np.sqrt(mean_squared_error(Y, predicted)))
     num.append(n)
 	
-df_plt = pd.DataFrame()
+df_plt = varpanda.DataFrame()
 df_plt['rmse'] = rmse_l
 df_plt['n_neighbors'] = num
 ax = plt.figure(figsize=(15,7))
@@ -330,7 +330,7 @@ sns.boxplot(data = df3, x='Price', y='Suburb')
 plt.show()
 
 df_copy = df3
-df_copy = pd.merge(df_copy, temp2, on='Suburb', how='left')
+df_copy = varpanda.merge(df_copy, temp2, on='Suburb', how='left')
 df_copy.head()
 
 type_g = df3.groupby('Type').agg({'min', 'mean', 'max'})
@@ -343,7 +343,7 @@ f, ax = plt.subplots(figsize=(15, 10))
 sns.stripplot(data = df3, x='Type', y='Price', jitter=.5)
 plt.show()
  
-df_copy = pd.merge(df_copy, temp3, on='Type', how='left')
+df_copy = varpanda.merge(df_copy, temp3, on='Type', how='left')
 df_copy.head()
 
 method = df3.groupby('Method').agg({'min', 'mean', 'max'})
@@ -357,7 +357,7 @@ f, ax = plt.subplots(figsize=(15, 5))
 sns.violinplot(data = df3, x='Price', y='Method', jitter=.5)
 plt.show()
 
-df_copy = pd.merge(df_copy, temp4, on='Method', how='left')
+df_copy = varpanda.merge(df_copy, temp4, on='Method', how='left')
 df_copy.head()
 
 sellerg = df3.groupby('SellerG').agg({'min', 'mean', 'max'})
@@ -371,7 +371,7 @@ f, ax = plt.subplots(figsize=(15, 60))
 sns.stripplot(data = df3, x='Price', y='SellerG', jitter=.1)
 plt.show()
 
-df_copy = pd.merge(df_copy, temp5, on='SellerG', how='left')
+df_copy = varpanda.merge(df_copy, temp5, on='SellerG', how='left')
 df_copy.head()
 
 council = df3.groupby('CouncilArea').agg({'min', 'mean', 'max'})
@@ -388,7 +388,7 @@ plt.show()
 
 #df_copy = df_copy.drop(['max_c_id_y', 'min_c_id_y', 'mean_c_id_y'], axis=1)
 
-df_copy = pd.merge(df_copy, temp6, on='CouncilArea', how='left')
+df_copy = varpanda.merge(df_copy, temp6, on='CouncilArea', how='left')
 df_copy.head()
 
 region = df3.groupby('Regionname').agg({'min', 'mean', 'max'})
@@ -403,7 +403,7 @@ sns.boxplot(data = df3, x='Price', y='Regionname')
 #plt.xticks(rotation='vertical')
 plt.show()
 
-df_copy = pd.merge(df_copy, temp7, on='Regionname', how='left')
+df_copy = varpanda.merge(df_copy, temp7, on='Regionname', how='left')
 df_copy.head()
 
 df_copy['date_m'], df_copy['date_d'], df_copy['date_y'] = df_copy['Date'].str.split('/', 2).str
@@ -452,7 +452,7 @@ for n in range(2, 15):
     depth.append(n)
 	
 
-plt_dtr = pd.DataFrame()
+plt_dtr = varpanda.DataFrame()
 
 plt_dtr['mean_scores'] = scores
 plt_dtr['depth'] = depth
@@ -588,7 +588,7 @@ print(cross_val_score(rid, X, Y, cv=12))
 # Ridge is the winner:
 # Although the RMSE score is high look at the cross validation score, it ranges between 60-70%. This is really good. Lets take a look at the coefficients and see dollar to dollar what each feature is valued at.
 
-cdf = pd.DataFrame(data = rid.coef_, index = X.columns, columns = ['Coefficients'])
+cdf = varpanda.DataFrame(data = rid.coef_, index = X.columns, columns = ['Coefficients'])
 cdf
 
 # Boosting:
@@ -610,7 +610,7 @@ for n in range(3, 11):
     r_sq.append(gbr.score(X, Y))
     mean_scores.append(cross_val_score(gbr, X, Y, cv=12).mean())
 	
-plt_gbr = pd.DataFrame()
+plt_gbr = varpanda.DataFrame()
 
 plt_gbr['mean_scores'] = mean_scores
 plt_gbr['depth'] = deep
@@ -640,5 +640,5 @@ print(rmse)
 # Boosting is as advertised!!!
 # It reduced the bias and variances. This is evidenced by a higher mean score and a much lower RMSE than the ridge model.
 
-cdf = pd.DataFrame(data = gbr.feature_importances_, index = X.columns, columns = ['Importance'])
+cdf = varpanda.DataFrame(data = gbr.feature_importances_, index = X.columns, columns = ['Importance'])
 cdf
