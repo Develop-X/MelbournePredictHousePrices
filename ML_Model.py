@@ -17,13 +17,13 @@ melbourne_data.head()
 melbourne_data.info()
 
 # remove all missing data
-df2 = melbourne_data[melbourne_data.Price.notnull()]
-df2 = df2[df2.BuildingArea.notnull()]
-df2 = df2[df2.Car.notnull()]
-df2 = df2[df2.Landsize.notnull()]
-df2 = df2[df2.Lattitude.notnull()]
-df2 = df2[df2.Longtitude.notnull()]
-df2.info()
+clean_data = melbourne_data[melbourne_data.Price.notnull()]
+clean_data = clean_data[clean_data.BuildingArea.notnull()]
+clean_data = clean_data[clean_data.Car.notnull()]
+clean_data = clean_data[clean_data.Landsize.notnull()]
+clean_data = clean_data[clean_data.Lattitude.notnull()]
+clean_data = clean_data[clean_data.Longtitude.notnull()]
+clean_data.info()
 
 # if number of bedrooms has a relationship to price
 print(varpanda.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2']))
@@ -31,41 +31,41 @@ print('\n')
 
 
 f, ax = varmatplt.subplots(figsize=(5, 5))
-varseaborn.regplot(data=df2, x='Rooms', y='Price')
+varseaborn.regplot(data=clean_data, x='Rooms', y='Price')
 varmatplt.show()
 
 # Although weak, it appears that there seems to be a positive relationship. Let's see what is the actual correlation between price and the other data points. We will look at this in 2 ways heatman for visualization and the correlation coefficient score.
 
 f, ax = varmatplt.subplots(figsize=(5, 5))
-corrmat = df2.corr()
+corrmat = clean_data.corr()
 varseaborn.heatmap(corrmat, vmax=.8, square=True)
 varmatplt.show()
 corrmat
 
 # Distribution of the data
 varmatplt.rcParams['figure.figsize'] = 16, 16
-df2.loc[:,:].hist(bins=100)
+clean_data.loc[:,:].hist(bins=100)
 varmatplt.show()
 
 # Create new features: Let's create new features to see if these new features will have a stronger correlation coefficient score than the original. We will do so by mixing the data and altering the data.
-df2['Roomssq'] = df2.Rooms ** 2
-df2['Roomssqrt'] = df2.Rooms ** (1/2)
-df2['Plus'] = df2.Rooms + df2.Bedroom2 + df2.Bathroom
-df2['Prod'] = df2.Rooms * df2.Bedroom2 * df2.Bathroom
-df2['year'] = (2017 - df2.YearBuilt)
-df2['yearsq'] = (2017 - df2.YearBuilt) ** 2
-df2['yearsqrt'] = (2017 - df2.YearBuilt) ** (1/2)
+clean_data['Roomssq'] = clean_data.Rooms ** 2
+clean_data['Roomssqrt'] = clean_data.Rooms ** (1/2)
+clean_data['Plus'] = clean_data.Rooms + clean_data.Bedroom2 + clean_data.Bathroom
+clean_data['Prod'] = clean_data.Rooms * clean_data.Bedroom2 * clean_data.Bathroom
+clean_data['year'] = (2017 - clean_data.YearBuilt)
+clean_data['yearsq'] = (2017 - clean_data.YearBuilt) ** 2
+clean_data['yearsqrt'] = (2017 - clean_data.YearBuilt) ** (1/2)
 
 f, ax = varmatplt.subplots(figsize=(5, 5))
-corrmat = df2.corr()
+corrmat = clean_data.corr()
 varseaborn.heatmap(corrmat, vmax=.8, square=True)
 varmatplt.show()
 corrmat
 
 # It appears that the column "Plus" has a correlation score of .529 which is the highest correlation score out of all the features new and old. This new feature was created by rooms, bedrooms and bathrooms.
 # Let's drop the weakest scores and run our first model "Decision Tree Regressor"
-X = df2.drop(['YearBuilt', 'year', 'yearsq', 'yearsqrt', 'Price',], axis=1)
-Y = df2.Price
+X = clean_data.drop(['YearBuilt', 'year', 'yearsq', 'yearsqrt', 'Price',], axis=1)
+Y = clean_data.Price
 X = varpanda.get_dummies(data=X)
 
 
