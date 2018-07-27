@@ -131,7 +131,7 @@ plt.xlabel('Residual',fontsize=25)
 plt.ylabel('Count',fontsize=25)
 
 ax2 = plt.subplot(212)
-plt.scatter(predicted, residual, color ='orange')
+plt.scatter(predicted, residual, color ='blue')
 plt.tick_params(axis='both', which='major', labelsize=20)
 plt.xlabel('Predicted',fontsize=25)
 plt.ylabel('Residual',fontsize=25)
