@@ -452,7 +452,7 @@ for n in range(2, 15):
     depth.append(n)
 	
 
-plt_dtr  =  pd.DataFrameDataFram ()
+plt_dtr = pd.DataFrame()
 
 plt_dtr['mean_scores'] = scores
 plt_dtr['depth'] = depth
