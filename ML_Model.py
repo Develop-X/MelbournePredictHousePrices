@@ -16,7 +16,7 @@ melbourne_data.head()
 
 melbourne_data.info()
 
-# remove all missing data
+# data washing / cleaning
 clean_data = melbourne_data[melbourne_data.Price.notnull()]
 clean_data = clean_data[clean_data.BuildingArea.notnull()]
 clean_data = clean_data[clean_data.Car.notnull()]
@@ -25,11 +25,9 @@ clean_data = clean_data[clean_data.Lattitude.notnull()]
 clean_data = clean_data[clean_data.Longtitude.notnull()]
 clean_data.info()
 
-# if number of bedrooms has a relationship to price
+# does the #bedrooms have a relationship to price?
 print(varpanda.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2']))
 print('\n')
-
-
 f, ax = varmatplt.subplots(figsize=(5, 5))
 varseaborn.regplot(data=clean_data, x='Rooms', y='Price')
 varmatplt.show()
@@ -61,8 +59,8 @@ corrmat = clean_data.corr()
 varseaborn.heatmap(corrmat, vmax=.8, square=True)
 varmatplt.show()
 corrmat
-
 # It appears that the column "Plus" has a correlation score of .529 which is the highest correlation score out of all the features new and old. This new feature was created by rooms, bedrooms and bathrooms.
+
 # Let's drop the weakest scores and run our first model "Decision Tree Regressor"
 X = clean_data.drop(['YearBuilt', 'year', 'yearsq', 'yearsqrt', 'Price',], axis=1)
 Y = clean_data.Price
