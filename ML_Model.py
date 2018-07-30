@@ -61,6 +61,10 @@ varmatplt.show()
 corrmat
 # It appears that the column "Plus" has a correlation score of .529 which is the highest correlation score out of all the features new and old. This new feature was created by rooms, bedrooms and bathrooms.
 
+
+# Modelling
+# Decision Tree Regression
+
 # Let's drop the weakest scores and run our first model "Decision Tree Regressor"
 X = clean_data.drop(['YearBuilt', 'year', 'yearsq', 'yearsqrt', 'Price',], axis=1)
 Y = clean_data.Price
@@ -75,7 +79,7 @@ dtr.fit(X, Y)
 print(cross_val_score(dtr, X, Y, cv=5))
 
 # [-0.04384913  0.00482545  0.00621629 -0.04248696 -0.00801812]
-# The scores above is bad...Let's take a look at why it's bad
+# The scores above is bad...Let's take a look at why it's bad using Root Mean Square Error/ Deviation
 
 predicted = dtr.predict(X)
 residual = Y - predicted
@@ -105,12 +109,16 @@ print(rmse)
 
 
 # RMSE: 677273.379164
-#The root-mean-square deviation (RMSD) or root-mean-square error (RMSE) (or sometimes root-mean-squared error) is a frequently used measure of the differences between values (sample and population values) predicted by a model or an estimator and the values actually observed. The RMSD represents the sample standard deviation of the differences between predicted values and observed values. These individual differences are called residuals when the calculations are performed over the data sample that was used for estimation, and are called prediction errors when computed out-of-sample. The RMSD serves to aggregate the magnitudes of the errors in predictions for various times into a single measure of predictive power. RMSD is a measure of accuracy, to compare forecasting errors of different models for a particular data and not between datasets, as it is scale-dependent. ~ WikiPedia
+
+# The root-mean-square deviation (RMSD) or root-mean-square error (RMSE) (or sometimes root-mean-squared error) is a frequently used measure of the differences between values (sample and population values) predicted by a model or an estimator and the values actually observed. The RMSD represents the sample standard deviation of the differences between predicted values and observed values. These individual differences are called residuals when the calculations are performed over the data sample that was used for estimation, and are called prediction errors when computed out-of-sample. The RMSD serves to aggregate the magnitudes of the errors in predictions for various times into a single measure of predictive power. RMSD is a measure of accuracy, to compare forecasting errors of different models for a particular data and not between datasets, as it is scale-dependent.
 
 # The higher the RMSE the worst our predicting model is and the reason why the RMSE score is high and bad is because it appears this model picked a single price point for the categories that the model selected this is shown in the graphs above.
 
 # Let's take a different approach...
 # and think like a real estate agents. As real estate agents we should look the comparables see what a house like what we're trying to predict is priced based on sales of similar homes. Let's use the next model "Nearest Neighbors" and use the 2 nearnest neighbors.
+
+# Modelling
+# Nearest Neighbors
 
 from sklearn import neighbors
 
@@ -169,9 +177,10 @@ varmatplt.show()
 print(rmse_l)
 
 # [246010.72612387789, 299140.89928988385, 331499.77892903792, 347367.56599903584, 363610.28713245952, 373641.28252136859, 382776.00220798928, 390369.98595582315, 399132.94385391136, 404725.34418166213, 410064.63836764981, 414764.42545172054, 419022.88172154903, 423461.00056615419]
+
 # It appears that 2 nearest neighbors is the optimal number of neighbors. This is evidenced by the increasing RMSE as we increase the number of neighbors.
 
-# Lasso & Ridge:
+# Modelling - Lasso & Ridge
 # Let's look at a model "Lasso" & "Ridge", these models will penalize the model for larger coefficients. So these models will regularizes the way it predicts the price. Lets try a low alpha first and see how it performs.
 
 from sklearn import linear_model
