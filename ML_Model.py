@@ -302,16 +302,16 @@ print(cross_val_score(knn, X, Y, cv=3))
 # Working with more data:
 # Since working with a reduced amount of data may skew our models predicting ability let's attempt to keep as much of the data as possible.
 
-df3 = melbourne_data[melbourne_data.Price.notnull()]
-#df3 = df3[df3.BuildingArea.notnull()]
-df3 = df3[df3.Car.notnull()]
-#df3 = df3[df3.Landsize.notnull()]
-#df3 = df3[df3.Lattitude.notnull()]
-#df3 = df3[df3.Longtitude.notnull()]
-df3.info()
+addNulls_clean_data = melbourne_data[melbourne_data.Price.notnull()]
+#addNulls_clean_data = addNulls_clean_data[addNulls_clean_data.BuildingArea.notnull()]
+addNulls_clean_data = addNulls_clean_data[addNulls_clean_data.Car.notnull()]
+#addNulls_clean_data = addNulls_clean_data[addNulls_clean_data.Landsize.notnull()]
+#addNulls_clean_data = addNulls_clean_data[addNulls_clean_data.Lattitude.notnull()]
+#addNulls_clean_data = addNulls_clean_data[addNulls_clean_data.Longtitude.notnull()]
+addNulls_clean_data.info()
 
-df3 = df3.drop(['BuildingArea', 'YearBuilt', 'Landsize', 'Lattitude', 'Longtitude'], axis=1)
-df3.info()
+addNulls_clean_data = addNulls_clean_data.drop(['BuildingArea', 'YearBuilt', 'Landsize', 'Lattitude', 'Longtitude'], axis=1)
+addNulls_clean_data.info()
 
 # Alright we kept about 60% of the original data. Please note that features above that were dropped were due to low correlation coefficient scores.
 # Let's take feature engineering to a new level:
@@ -325,7 +325,7 @@ df3.info()
 # Region Name
 # By creating these markers, we are hoping this will give the model a better idea that certain area, types, sales agent, etc.. will be a better indicator of price points.
 
-temp = df3.groupby('Suburb').agg({'min', 'mean', 'max'})
+temp = addNulls_clean_data.groupby('Suburb').agg({'min', 'mean', 'max'})
 temp2 = temp['Price']
 temp2 = temp2.reset_index()
 temp2.columns = ['Suburb', 'max_sub_id', 'min_sub_id', 'mean_sub_id']
@@ -333,27 +333,27 @@ print(temp2.info())
 temp2.head()
 
 f, ax = varmatplt.subplots(figsize=(15, 60))
-varseaborn.boxplot(data = df3, x='Price', y='Suburb')
+varseaborn.boxplot(data = addNulls_clean_data, x='Price', y='Suburb')
 varmatplt.show()
 
-df_copy = df3
+df_copy = addNulls_clean_data
 df_copy = varpanda.merge(df_copy, temp2, on='Suburb', how='left')
 df_copy.head()
 
-type_g = df3.groupby('Type').agg({'min', 'mean', 'max'})
+type_g = addNulls_clean_data.groupby('Type').agg({'min', 'mean', 'max'})
 temp3 = type_g['Price']
 temp3 = temp3.reset_index()
 temp3.columns = ['Type', 'max_t_id', 'min_t_id', 'mean_t_id']
 temp3
 
 f, ax = varmatplt.subplots(figsize=(15, 10))
-varseaborn.stripplot(data = df3, x='Type', y='Price', jitter=.5)
+varseaborn.stripplot(data = addNulls_clean_data, x='Type', y='Price', jitter=.5)
 varmatplt.show()
  
 df_copy = varpanda.merge(df_copy, temp3, on='Type', how='left')
 df_copy.head()
 
-method = df3.groupby('Method').agg({'min', 'mean', 'max'})
+method = addNulls_clean_data.groupby('Method').agg({'min', 'mean', 'max'})
 temp4 = method['Price']
 temp4 = temp4.reset_index()
 temp4.columns = ['Method', 'max_m_id', 'min_m_id', 'mean_m_id']
@@ -361,13 +361,13 @@ temp4
 
 
 f, ax = varmatplt.subplots(figsize=(15, 5))
-varseaborn.violinplot(data = df3, x='Price', y='Method', jitter=.5)
+varseaborn.violinplot(data = addNulls_clean_data, x='Price', y='Method', jitter=.5)
 varmatplt.show()
 
 df_copy = varpanda.merge(df_copy, temp4, on='Method', how='left')
 df_copy.head()
 
-sellerg = df3.groupby('SellerG').agg({'min', 'mean', 'max'})
+sellerg = addNulls_clean_data.groupby('SellerG').agg({'min', 'mean', 'max'})
 temp5 = sellerg['Price']
 temp5 = temp5.reset_index()
 temp5.columns = ['SellerG', 'max_s_id', 'min_s_id', 'mean_s_id']
@@ -375,13 +375,13 @@ print(temp5.info())
 temp5.head()
 
 f, ax = varmatplt.subplots(figsize=(15, 60))
-varseaborn.stripplot(data = df3, x='Price', y='SellerG', jitter=.1)
+varseaborn.stripplot(data = addNulls_clean_data, x='Price', y='SellerG', jitter=.1)
 varmatplt.show()
 
 df_copy = varpanda.merge(df_copy, temp5, on='SellerG', how='left')
 df_copy.head()
 
-council = df3.groupby('CouncilArea').agg({'min', 'mean', 'max'})
+council = addNulls_clean_data.groupby('CouncilArea').agg({'min', 'mean', 'max'})
 temp6 = council['Price']
 temp6 = temp6.reset_index()
 temp6.columns = ['CouncilArea', 'max_c_id', 'min_c_id', 'mean_c_id']
@@ -389,7 +389,7 @@ print(temp6.info())
 temp6.head()
 
 f, ax = varmatplt.subplots(figsize=(15, 5))
-varseaborn.boxplot(data = df3, x='CouncilArea', y='Price')
+varseaborn.boxplot(data = addNulls_clean_data, x='CouncilArea', y='Price')
 varmatplt.xticks(rotation='vertical')
 varmatplt.show()
 
@@ -398,7 +398,7 @@ varmatplt.show()
 df_copy = varpanda.merge(df_copy, temp6, on='CouncilArea', how='left')
 df_copy.head()
 
-region = df3.groupby('Regionname').agg({'min', 'mean', 'max'})
+region = addNulls_clean_data.groupby('Regionname').agg({'min', 'mean', 'max'})
 temp7 = region['Price']
 temp7 = temp7.reset_index()
 temp7.columns = ['Regionname', 'max_r_id', 'min_r_id', 'mean_r_id']
@@ -406,7 +406,7 @@ print(temp7.info())
 temp7.head()
 
 f, ax = varmatplt.subplots(figsize=(15, 10))
-varseaborn.boxplot(data = df3, x='Price', y='Regionname')
+varseaborn.boxplot(data = addNulls_clean_data, x='Price', y='Regionname')
 #varmatplt.xticks(rotation='vertical')
 varmatplt.show()
 
@@ -644,7 +644,7 @@ print(scores.mean())
 print('\nRMSE:')
 print(rmse)
 
-# Boosting is as advertised!!!
+# Boosting is the clear winner
 # It reduced the bias and variances. This is evidenced by a higher mean score and a much lower RMSE than the ridge model.
 
 cdf = varpanda.DataFrame(data = gbr.feature_importances_, index = X.columns, columns = ['Importance'])
