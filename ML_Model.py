@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 @author: ady.kalra
+
+Pandas - head(), info(), crosstab(), mean(), corr(), 
+Matplot - subplots(), show(), 
+Seaborn - regplot(), heatmap(), 
+
 """
 
 import pandas as varpanda
@@ -25,7 +30,7 @@ clean_data = clean_data[clean_data.Lattitude.notnull()]
 clean_data = clean_data[clean_data.Longtitude.notnull()]
 clean_data.info()
 
-# does the #bedrooms have a relationship to price?
+# do the number of bedrooms have a relationship to price?
 print(varpanda.crosstab(melbourne_data['Price'].mean(), melbourne_data['Bedroom2']))
 print('\n')
 f, ax = varmatplt.subplots(figsize=(5, 5))
