@@ -2,7 +2,7 @@
 """
 @author: ady.kalra
 
-Pandas - head(), info(), crosstab(), mean(), corr(), 
+Pandas [Python Data Analysis Library] - head(), info(), crosstab(), mean(), corr(), 
 Matplot - subplots(), show(), 
 Seaborn - regplot(), heatmap(), 
 
